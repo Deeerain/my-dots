@@ -1,0 +1,33 @@
+window {
+    background-color: rgba(30, 30, 46, 0.9); /* Catppuccin Mocha base */
+    border-radius: 20px;
+    border: 2px solid #89b4fa;
+    padding: 20px;
+}
+
+#outer-box {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  gap: 20px;
+  padding: 10px;
+}
+
+#entry {
+  display: flex;
+  padding: 20px;
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 40px;
+  min-width: 0;
+  width: auto;
+  color: #cdd6f4;
+  border-radius: 15px;
+  margin: 10px;
+  text-align: center;
+}
+
+#entry:selected {
+    background-color: #89b4fa;
+    color: #1e1e2e;
+}
+
