@@ -1,83 +1,73 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 10,
-  "margin-bottom":0,
-  "margin-top":0,
+  "margin-left": 5,
+  "margin-top": 5,
+  "margin-right": 5,
   "modules-left": [
-    "cpu",
-    "memory",
-    "network"
+    "custom/logo",
+    "hyprland/window"
   ],
   "modules-center": [
     "hyprland/workspaces"
   ],
   "modules-right": [
     "tray",
-    "idle_inhibitor",
+    "network",
     "pulseaudio",
-    "clock"
+    "custom/separator",
+    "clock",
+    "custom/powermenu"
   ],
   "hyprland/workspaces": {
-     "sort-by-name": true,
-     "on-click": "activate"
+    "sort-by-name": true,
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "",
+      "2": "",
+      "3": "",
+      "4": "",
+      "5": "",
+      "6": "",
+      "7": "",
+      "8": "",
+      "9": "",
+      "10": "",
+      "active": "",
+      "default": ""
+    }
   },
   "hyprland/window": {
-    "max-length": 200,
+    "max-length": 50,
     "separate-outputs": true
   },
   "tray": {
-    "icon-size": 16,
-    "spacing": 6
+    "icon-size": 14,
+    "spacing": 5
   },
   "clock": {
-    "format": " {:%H:%M}",
+    "format": "{:%H:%M}",
     "format-alt": " {:%Y-%m-%d %H:%M:%S}",
     "tooltip-format": "<tt>{calendar}</tt>",
     "calendar": {
-      "mode": "year",
+      "mode": "month"
     }
-  },
-  "cpu": {
-    "format": "&#8239;{usage}%",
-    "tooltip": false,
-    "on-click": "kitty -e 'htop'"
-  },
-  "memory": {
-    "interval": 30,
-    "format": " {used:0.2f}GB",
-    "max-length": 10,
-    "tooltip": false,
-    "warning": 70,
-    "critical": 90
   },
   "network": {
     "interval": 2,
-    "format-wifi": " {signalStrength}%",
+    "format": "{ifname}",
+    "format-wifi": "",
     "format-ethernet": "",
-    "format-linked": " {ipaddr}",
-    "format-disconnected": " Disconnected",
-    "format-disabled": "",
-    "tooltip": false,
-    "max-length": 20,
-    "min-length": 6,
-    "format-alt": "{essid}",
-  },
-  "idle_inhibitor": {
-    "format": "{icon}",
-    "format-icons": {
-        "activated": "",
-        "deactivated": ""
-    }
+    "tooltip-format-wifi": "{essid}"
   },
   "pulseaudio": {
-  // "scroll-step": 1, // %, can be a float
-    "format": "{icon} {volume}% {format_source}",
+    // "scroll-step": 1, // %, can be a float
+    "format": "{icon}",
     "format-bluetooth": "{icon} {volume}% {format_source}",
     "format-bluetooth-muted": " {format_source}",
     "format-muted": "  {format_source}",
-    "format-source": " {volume}%",
-    "format-source-muted": "",
+    "tooltip-format": "{icon} {volume}%",
     "format-icons": {
       "headphone": "",
       "hands-free": "",
@@ -85,35 +75,26 @@
       "phone": "",
       "portable": "",
       "car": "",
-      "default": ["", "", ""]
+      "default": [
+        "",
+        "",
+        ""
+      ]
     },
-  "on-click": "pavucontrol"
+    "on-click": "pavucontrol"
   },
-  "mpd": {
-    "format": "{stateIcon} {artist} - {title}",
-    "format-disconnected": "🎶",
-    "format-stopped": "♪",
-    "interval": 10,
-    "consume-icons": {
-      "on": " " // Icon shows only when "consume" is on
-    },
-    "random-icons": {
-      "off": "<span color=\"#f53c3c\"></span> ", // Icon grayed out when "random" is off
-      "on": " "
-    },
-    "repeat-icons": {
-      "on": " "
-    },
-    "single-icons": {
-      "on": "1 "
-    },
-    "state-icons": {
-      "paused": "",
-      "playing": ""
-    },
-    "tooltip-format": "MPD (connected)",
-    "tooltip-format-disconnected": "MPD (disconnected)",
-    "max-length": 35
+  "custom/separator": {
+    "format": "|",
+    "tooltip": false
+  },
+  "custom/logo": {
+    "format": "󰣇",
+    "on-click": "~/.config/wofi/launchers/launcher.sh",
+    "tooltip": false
+  },
+  "custom/powermenu": {
+    "format": "⏻",
+    "on-click": "~/.config/wofi/powermenu/powermenu.sh",
+    "tooltip": false
   }
 }
-

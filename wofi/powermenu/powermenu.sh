@@ -1,6 +1,6 @@
 #!/bin/bash
 
-style=~/.config/wofi/powermenu/style.css
+style=~/.config/wofi/style.css
 
 # Только иконки (Nerd Fonts)
 options="\n\n\n"

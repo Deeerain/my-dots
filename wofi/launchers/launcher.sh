@@ -1,3 +1,5 @@
 #!/bin/bash
 
-wofi --show drun -I
+style=~/.config/wofi/style.css
+
+wofi --show drun -I -s "$style"
