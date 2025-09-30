@@ -5,7 +5,7 @@
 }
 
 window {
-  background-color: rgba(30, 30, 46, 0.9);
+  background-color: alpha(@theme_bg_color, 0.9);
   border-radius: 5px;
 }
 
@@ -15,15 +15,12 @@ window {
 
 #input {
   margin-bottom: 10px;
-  background: transparent;
+  background: @theme_base_color;
+  color: @theme_fg_color;
   border: 1px solid transparent;
   outline: none;
   box-shadow: none;
   transition: .5s;
-}
-
-#entry {
-  border-radius: 5px;
 }
 
 #input:focus {

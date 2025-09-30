@@ -1,25 +1,11 @@
-/* Using "Catpuccin Frappe" theme pallete */
-
-/*
-* Text - rgb(198, 208, 245)
-* Base - rgb(48, 52, 70)
-*/
-
 * {
   font-family: JetBrainsMono;
   font-size: 14px;
-  color: rgb(198, 208, 245);
   margin: 0;
 }
 
 window#waybar {
-  background-color: rgba(48, 52, 70, .9);
   border-radius: 5px;
-}
-
-tooltip {
-  background: rgb(41, 44, 60);
-  color: rgb(198, 208, 245);
 }
 
 #custom-logo,
