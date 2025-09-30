@@ -20,3 +20,4 @@ sddm
 ``
 grub2
 ``
+Graphite theme
