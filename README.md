@@ -9,6 +9,9 @@ hyprpaper
 ``
 hyprlock
 ``
+``
+nwg-look
+``
 --
 
 ``
