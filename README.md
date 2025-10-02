@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./thumb/my-dots-banner.png" alt="Project Banner" width="800">
+</p>
+
 ## Screenshots
 ![](./thumb/20251003_005237.png)
 ![](./thumb/20251003_005245.png)
