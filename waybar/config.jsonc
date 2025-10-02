@@ -12,6 +12,7 @@
     "hyprland/workspaces"
   ],
   "modules-right": [
+    "keyboard-state",
     "tray",
     "network",
     "pulseaudio",
@@ -89,6 +90,9 @@
       ]
     },
     "on-click": "pavucontrol"
+  },
+  "keyboard-state": {
+    "format": "{name}"
   },
   "custom/separator": {
     "format": "|",
