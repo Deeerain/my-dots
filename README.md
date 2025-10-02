@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./thumb/my-dots-banner.png" alt="Project Banner" width="800">
+  <img src="https://raw.githubusercontent.com/deeerain/my-dots/main/thumb/my-dots-banner.png" alt="Project Banner" width="800">
 </p>
 
 ## Screenshots
