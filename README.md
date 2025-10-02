@@ -22,7 +22,13 @@ sddm
 ``` bash
 grub2
 ```
-
+``` bash
+grim
+```
+``` bash
+slurp
+```
+---
 ### Grub2
 Theme - [Graphite](https://github.com/Jacksaur/Gorgeous-GRUB)
 Graphite theme
