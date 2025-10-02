@@ -36,6 +36,13 @@
       "10": "",
       "active": "",
       "default": ""
+    },
+    "persistent-workspaces": {
+      "*": [
+        1,
+        2,
+        3
+      ]
     }
   },
   "hyprland/window": {
