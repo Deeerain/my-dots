@@ -6,6 +6,7 @@ arch=('any')
 url="https://github.com/Deeerain/ubm-dots"
 makedepends=('git')
 depends=(
+  'fish'
   'hyprland>=0.53.0'
   'awww-git'
   'hyprlock'
@@ -42,6 +43,7 @@ package() {
   install -dm755 "$install_dir/.config/mako"
   install -dm755 "$install_dir/.config/fastfetch"
   install -dm755 "$install_dir/.config/kitty"
+  install -dm775 "$install_dir/.config/fish"
 
   cp -r dots/hypr "$install_dir/.config"
   cp -r dots/waybar "$install_dir/.config"
@@ -49,6 +51,7 @@ package() {
   cp -r dots/mako "$install_dir/.config"
   cp -r dots/fastfetch "$install_dir/.config"
   cp -r dots/kitty "$install_dir/.config"
+  cp -r dots/fish "$install_dir/.config"
   cp -r ubm-dots.py "$install_dir/ubm-dots.py"
 
   ln -sf /usr/share/ubm-dots/ubm-dots.py "$pkgdir/usr/bin/ubm-dots"
