@@ -29,7 +29,6 @@ optgepends=(
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
 source=("git+https://github.com/deeerain/ubm-dots.git#tag=v$pkgver-$pkgrel")
-sha256sums=('SKIP')
 
 package() {
   cd "$srcdir/$pkgname"
@@ -56,3 +55,4 @@ package() {
 
   ln -sf /usr/share/ubm-dots/ubm-dots.py "$pkgdir/usr/bin/ubm-dots"
 }
+sha256sums=('SKIP')
