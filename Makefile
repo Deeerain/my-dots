@@ -1,15 +1,14 @@
-PKGBUILD_LOCAL = PKGBUILD.local
+PKGBUILD_LOCAL = PKGBUILD
 
 clear:
 	rm -rf ./pkg
 	rm -rf ./src
 	rm -rf ./ubm-dots
-	rm -rf $(PKGBUILD_LOCAL)
+	mv "$(PKGBUILD_LOCAL).back" $(PKGBUILD_LOCAL)
 	rm -rf ./*.zst
 
 generate_local:
-	cp ./PKGBUILD ./PKGBUILD.local
-	sed -i 's|^source=.*|source=("git+file:///$(PWD)#branch=dev")|' $(PKGBUILD_LOCAL)
+	sed -i.back 's|^source=.*|source=("git+file:///$(PWD)#branch=dev")|' $(PKGBUILD_LOCAL)
 
 build: generate_local
 	makepkg -isp $(PKGBUILD_LOCAL)

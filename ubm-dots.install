@@ -1,0 +1,4 @@
+post_install() {
+  echo "DASDASDASADAD"
+  ubm-dots reload
+}
