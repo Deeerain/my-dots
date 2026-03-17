@@ -29,7 +29,6 @@ optgepends=(
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
 source=("git+https://github.com/deeerain/ubm-dots.git#tag=v$pkgver-$pkgrel")
-install=$pkgname.install
 
 package() {
   cd "$srcdir/$pkgname"
