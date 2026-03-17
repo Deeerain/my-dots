@@ -28,7 +28,7 @@ optgepends=(
   'catppuccin-gtk-theme-frappe: Gtk theme (AUR)'
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
-source=("git+https://github.com/deeerain/ubm-dots.git#tag=v$pkgver-$pkgrel")
+source=("git+file:////home/deerain/Development/ubm-dots#branch=dev")
 
 package() {
   cd "$srcdir/$pkgname"
@@ -37,8 +37,9 @@ package() {
   mkdir -p "$pkgdir/usr/bin"
 
   for dir in ./dots/*; do
-    install -dm755 "$install_dir/.config/$(basename $dir)"
-    cp -r "$dir" "$install_dir/.config/"
+    dots_install_dir=$install_dir/${dir#.}
+    install -dm755 "$dots_install_dir"
+    cp -r $dir/* $dots_install_dir
   done
 
   cp ubm-dots.py "$pkgdir/usr/share/$pkgname"
