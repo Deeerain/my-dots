@@ -1,6 +1,6 @@
 pkgname=ubm-dots
-pkgver=0.0.5
-pkgrel=1
+pkgver=0.0.4
+pkgrel=2
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
 url="https://github.com/Deeerain/ubm-dots"
@@ -8,17 +8,13 @@ makedepends=('git')
 depends=(
   'hyprland>=0.53.0'
   'awww-git'
-  'oh-my-zsh-git'
   'hyprlock'
   'mako'
   'btop'
   'git'
   'grim'
   'slurp'
-  'zsh'
   'waybar'
-  'zsh-autosuggestions'
-  'zsh-syntax-highlighting'
   'exa'
   'nwg-look'
   'kitty'
@@ -54,8 +50,6 @@ package() {
   cp -r dots/fastfetch "$install_dir/.config"
   cp -r dots/kitty "$install_dir/.config"
   cp -r ubm-dots.py "$install_dir/ubm-dots.py"
-
-  install -Dm664 dots/.zshrc "$install_dir"
 
   ln -sf /usr/share/ubm-dots/ubm-dots.py "$pkgdir/usr/bin/ubm-dots"
 }
