@@ -1,18 +1,18 @@
 #!/bin/python3
-import shutil
 import typer
 import urllib.request
 import json
 import subprocess
-import os
+from http.client import HTTPResponse
 import pathlib
-from typing import List, Optional, Dict, Any
-from enum import Enum
+from typing import List, Dict, Any
 
 REPO_OWNER = "deeerain"
 REPO_NAME = "ubm-dots"
 INSTALL_FOLDER = pathlib.Path("/usr/share/ubm-dots")
-DOTFILES_DIR_NAME = "dots"
+DOTS_FOLDER = INSTALL_FOLDER / 'dots'
+HOME_DIR = pathlib.Path.home()
+CONFIG_DIR = HOME_DIR / '.config'
 
 app = typer.Typer()
 
@@ -86,7 +86,8 @@ class UpdateService:
         pass
 
     def get_latest_repo_info(self) -> None:
-        data = self._request(f'{self.api_url}/releases/latest')
+        url = f'{self.api_url}/releases/latest'
+        data = self._request(url)
 
         self.assets = data.get('assets')
 
@@ -115,18 +116,21 @@ class UpdateService:
     def _download(self, url: str, filename: str) -> str | None:
         result = urllib.request.urlretrieve(url, filename)
 
+        print(result)
+
         if len(result) > 0:
-            return result[1]
+            return result[0]
         return None
 
     def _get_asset_download_info(self, asset: Dict) -> (str, str):
         return (asset.get('name'), asset.get('browser_download_url'))
 
     def _request(self, url: str, *, method: str = 'get') -> Any:
-        req = urllib.request.Request(url, method=method)
-
-        with urllib.request.urlopen(req) as resp:
-            return Dict(json.loads(resp.read().decode('utf-8')))
+        resp: HTTPResponse = urllib.request.urlopen(url)
+        try:
+            return json.loads(resp.read().decode('utf-8'))
+        finally:
+            resp.close()
 
 
 class HyprlandService(ServiceBase):
@@ -175,6 +179,7 @@ class UBM:
     def __init__(self, update_service: UpdateService):
         self.update_service = update_service
         self.services = UBMService()
+        self.modules = DOTS_FOLDER.iterdir()
 
     def add_service(self, name: str, service: ServiceBase):
         self.services.add_service(name, service)
@@ -191,11 +196,46 @@ class UBM:
         return self.services.services.keys()
 
     def update(self):
-        zst_file = update_service.download_asset()
+        update_service.get_latest_repo_info()
+        zst_asset = update_service.find_zst_file()
+
+        if not zst_asset:
+            print("Zst file not found")
+            return
+
+        zst_file = update_service.download_asset(zst_asset)
         Utils.setup_zst(zst_file)
 
     def check_updates(self) -> bool:
         return self.update_service.check_updates()
+
+    def setup(self):
+        for module in DOTS_FOLDER.iterdir():
+            module_name = module.name
+            home_module = CONFIG_DIR / module_name
+
+            if home_module.exists():
+                home_module.move(f'{home_module}.back')
+
+            home_module.symlink_to(module)
+
+        self.restart_services()
+
+    def restore(self) -> None:
+        for module in CONFIG_DIR.iterdir():
+            if not module.is_symlink():
+                continue
+            if not module.readlink() in self.modules:
+                continue
+            module.unlink()
+
+        for module in CONFIG_DIR.iterdir():
+            if not module.name.endswith('.back'):
+                continue
+
+            module.move(CONFIG_DIR / module.name.removesuffix('.back'))
+
+        self.restart_services()
 
 
 update_service = UpdateService(REPO_NAME, REPO_OWNER)
@@ -208,7 +248,11 @@ ubm.add_service('waybar', WaybarService())
 
 
 @app.command("update")
-def update():
+def update(debug: bool = typer.Option(False, '--debug')):
+    if debug:
+        ubm.update()
+        return
+
     if not ubm.check_updates():
         typer.echo('Latest version')
         return
@@ -224,48 +268,14 @@ def reload(
     ubm.restart_services(services)
 
 
-def backup(*args: pathlib.Path):
-    for dest in args:
-        backup = dest.with_suffix(f"{dest.suffix}.backup")
-        shutil.move(str(dest), str(backup))
-        print(f"Backup : {backup}")
-
-
-def install(install_dir: pathlib.Path, config_dir_name: str):
-    if (
-        not install_dir.exists()
-        and not pathlib.Path(install_dir, config_dir_name).exists()
-    ):
-        return
-
-    home_config_dir = pathlib.Path.home() / ".config"
-    config_modules = [_ for _ in (install_dir / config_dir_name).iterdir()]
-
-    for config_module in config_modules:
-        home_config_module = home_config_dir / config_module.name
-
-        if not config_module.is_dir():
-            if home_config_module.exists() and not home_config_module.is_symlink():
-                backup(home_config_module)
-                home_config_module.symlink_to(config_module)
-
-        if home_config_module.exists() and not home_config_module.is_symlink():
-            backup(home_config_module)
-
-        if home_config_module.is_symlink():
-            home_config_module.unlink()
-
-        try:
-            home_config_module.symlink_to(config_module)
-            print(f"Symlink: {home_config_module} -> {config_module}")
-        except Exception as e:
-            print(e)
-
-
 @app.command("install")
 def install_command(debug: bool = typer.Option(False, "--debug")):
-    install_dir = INSTALL_FOLDER if not debug else pathlib.Path("./")
-    install(install_dir, DOTFILES_DIR_NAME)
+    ubm.setup()
+
+
+@app.command('restore')
+def restore_command():
+    ubm.restore()
 
 
 if __name__ == "__main__":

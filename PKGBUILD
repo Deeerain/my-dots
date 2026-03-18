@@ -28,7 +28,7 @@ optgepends=(
   'catppuccin-gtk-theme-frappe: Gtk theme (AUR)'
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
-source=("git+file:////home/deerain/Development/ubm-dots#branch=dev")
+source=("git+https://github.com/deeerain/ubm-dots.git#tag=v$pkgver-$pkgrel")
 
 package() {
   cd "$srcdir/$pkgname"
