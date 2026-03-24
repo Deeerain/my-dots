@@ -11,6 +11,7 @@ from typing import List, Dict, Any
 
 REPO_OWNER = "deeerain"
 REPO_NAME = "ubm-dots"
+VERSION = "0.0.7"  # Version for update checks
 INSTALL_FOLDER = pathlib.Path("/usr/share/ubm-dots")
 DOTS_FOLDER = INSTALL_FOLDER / 'dots'
 HOME_DIR = pathlib.Path.home()
@@ -40,34 +41,12 @@ class ServiceBase:
 class Utils:
     @staticmethod
     def get_current_version(repo_name: str):
-        '''Get installed version from pacman or PKGBUILD'''
-        # First try to get from PKGBUILD if it exists locally
-        try:
-            pkgbuild_path = pathlib.Path(__file__).parent / "PKGBUILD"
-            if pkgbuild_path.exists():
-                with open(pkgbuild_path, 'r') as f:
-                    for line in f:
-                        if line.startswith('pkgver='):
-                            version = line.split('=')[1].strip()
-                            if version.startswith("v"):
-                                version = version[1:]
-                            return version
-        except Exception:
-            pass
-        
-        # Fallback to pacman for installed packages
-        try:
-            result = subprocess.run(
-                ["pacman", "-Q", REPO_NAME], capture_output=True, check=True)
-            version = result.stdout.decode("utf-8").split()[1]
-
-            if version.startswith("v"):
-                version = version[1:]
-
-            return version
-        except (subprocess.CalledProcessError, IndexError) as e:
-            typer.echo(f"Error: Could not get current version: {e}", err=True)
-            return None
+        '''Get current version from VERSION constant or pacman'''
+        # Use VERSION constant defined in script
+        version = VERSION
+        if version.startswith("v"):
+            version = version[1:]
+        return version
 
     @staticmethod
     def is_newest_version(ver1: str, ver2: str) -> bool:
