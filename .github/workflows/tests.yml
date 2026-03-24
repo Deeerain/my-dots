@@ -54,7 +54,7 @@ jobs:
 
     - name: Check syntax
       run: |
-        python -m py_compile ubm_dots.py
+        python -m py_compile ubm-dots.py
         find tests -name "*.py" -exec python -m py_compile {} \;
 
     - name: Check imports

@@ -1,6 +1,6 @@
 pkgname=ubm-dots
-pkgver=0.0.5
-pkgrel=3
+pkgver=0.0.6
+pkgrel=1
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
 url="https://github.com/Deeerain/ubm-dots"
@@ -24,7 +24,7 @@ depends=(
   'ttf-jetbrains-mono-nerd'
   'yay'
   'base-devel')
-optgepends=(
+optdepends=(
   'catppuccin-gtk-theme-frappe: Gtk theme (AUR)'
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
