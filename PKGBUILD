@@ -36,9 +36,6 @@ package() {
   local install_dir="$pkgdir/usr/share/$pkgname"
   mkdir -p "$pkgdir/usr/bin"
 
-  # Update VERSION in ubm-dots.py to match package version
-  sed -i "s/VERSION = .*/VERSION = \"$pkgver\"/" ubm-dots.py
-
   for dir in ./dots/*; do
     dots_install_dir=$install_dir/${dir#.}
     install -dm755 "$dots_install_dir"
