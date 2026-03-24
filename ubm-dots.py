@@ -3,6 +3,8 @@ import typer
 import urllib.request
 import json
 import subprocess
+import shutil
+import sys
 from http.client import HTTPResponse
 import pathlib
 from typing import List, Dict, Any
@@ -30,23 +32,27 @@ class ServiceBase:
 
     def _cmd(self, cmd):
         try:
-            subprocess.run(cmd)
-        except subprocess.CalledProcessError as e:
-            pass
+            subprocess.run(cmd, check=True)
+        except (subprocess.CalledProcessError, FileNotFoundError) as e:
+            typer.echo(f"Warning: Command failed: {' '.join(cmd) if isinstance(cmd, list) else cmd}", err=True)
 
 
 class Utils:
     @staticmethod
     def get_current_version(repo_name: str):
-        '''Get installed verison'''
-        result = subprocess.run(
-            f"pacman -Q {REPO_NAME}".split(), capture_output=True)
-        version = result.stdout.decode("utf-8").split()[1]
+        '''Get installed version'''
+        try:
+            result = subprocess.run(
+                ["pacman", "-Q", REPO_NAME], capture_output=True, check=True)
+            version = result.stdout.decode("utf-8").split()[1]
 
-        if version.startswith("v"):
-            version = version[1:]
+            if version.startswith("v"):
+                version = version[1:]
 
-        return version
+            return version
+        except (subprocess.CalledProcessError, IndexError) as e:
+            typer.echo(f"Error: Could not get current version: {e}", err=True)
+            return None
 
     @staticmethod
     def is_newest_version(ver1: str, ver2: str) -> bool:
@@ -68,7 +74,11 @@ class Utils:
 
     @staticmethod
     def setup_zst(filepath: pathlib.Path):
-        subprocess.run(f"sudo pacman -U {filepath}".split())
+        try:
+            subprocess.run(["sudo", "pacman", "-U", str(filepath)], check=True)
+        except subprocess.CalledProcessError as e:
+            typer.echo(f"Error: Failed to install package: {e}", err=True)
+            raise
 
 
 class UpdateService:
@@ -82,8 +92,19 @@ class UpdateService:
     def api_url(self) -> str:
         return f'https://api.github.com/repos/{self.owner}/{self.repo}'
 
-    def check_updates(self) -> True:
-        pass
+    def check_updates(self) -> bool:
+        try:
+            self.get_latest_repo_info()
+            current_version = Utils.get_current_version(self.repo)
+            
+            if current_version is None:
+                return False
+            
+            # Returns True if latest > current (update available)
+            return Utils.is_newest_version(self.latest_version, current_version)
+        except Exception as e:
+            typer.echo(f"Error checking updates: {e}", err=True)
+            return False
 
     def get_latest_repo_info(self) -> None:
         url = f'{self.api_url}/releases/latest'
@@ -122,7 +143,7 @@ class UpdateService:
             return result[0]
         return None
 
-    def _get_asset_download_info(self, asset: Dict) -> (str, str):
+    def _get_asset_download_info(self, asset: Dict) -> tuple[str, str]:
         return (asset.get('name'), asset.get('browser_download_url'))
 
     def _request(self, url: str, *, method: str = 'get') -> Any:
@@ -210,30 +231,46 @@ class UBM:
         return self.update_service.check_updates()
 
     def setup(self):
+        if not DOTS_FOLDER.exists():
+            typer.echo(f"Error: DOTS_FOLDER not found at {DOTS_FOLDER}", err=True)
+            return
+            
         for module in DOTS_FOLDER.iterdir():
             module_name = module.name
             home_module = CONFIG_DIR / module_name
 
             if home_module.exists():
-                home_module.move(f'{home_module}.back')
+                backup_path = pathlib.Path(f'{home_module}.back')
+                if backup_path.exists():
+                    shutil.rmtree(backup_path, ignore_errors=True)
+                shutil.move(str(home_module), str(backup_path))
 
             home_module.symlink_to(module)
 
         self.restart_services()
 
     def restore(self) -> None:
+        if not CONFIG_DIR.exists():
+            typer.echo(f"Error: CONFIG_DIR not found at {CONFIG_DIR}", err=True)
+            return
+            
         for module in CONFIG_DIR.iterdir():
             if not module.is_symlink():
                 continue
-            if not module.readlink() in self.modules:
+            try:
+                if module.readlink() not in self.modules:
+                    continue
+            except (ValueError, OSError):
                 continue
             module.unlink()
 
-        for module in CONFIG_DIR.iterdir():
+        for module in list(CONFIG_DIR.iterdir()):
             if not module.name.endswith('.back'):
                 continue
 
-            module.move(CONFIG_DIR / module.name.removesuffix('.back'))
+            original_name = module.name.removesuffix('.back')
+            original_path = CONFIG_DIR / original_name
+            shutil.move(str(module), str(original_path))
 
         self.restart_services()
 
