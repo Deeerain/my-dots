@@ -25,6 +25,14 @@ cd my-dots
 ``` bash
 makepkg -i
 ```
+``` bash
+ubm-dots install
+```
+
+### Обновление:
+``` bash
+ubm-dots update --debug
+```
 </details>
 
 <details>
