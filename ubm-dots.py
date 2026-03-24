@@ -22,7 +22,7 @@ from unittest.mock import Mock, patch
 # Constants
 REPO_OWNER = "deeerain"
 REPO_NAME = "ubm-dots"
-VERSION = "0.0.7"  # Update this when releasing new versions (sync with PKGBUILD)
+VERSION = "0.0.8"  # Update this when releasing new versions (sync with PKGBUILD)
 INSTALL_FOLDER = Path("/usr/share/ubm-dots")
 DOTS_FOLDER = INSTALL_FOLDER / 'dots'
 HOME_DIR = Path.home()
