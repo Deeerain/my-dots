@@ -40,7 +40,22 @@ class ServiceBase:
 class Utils:
     @staticmethod
     def get_current_version(repo_name: str):
-        '''Get installed version'''
+        '''Get installed version from pacman or PKGBUILD'''
+        # First try to get from PKGBUILD if it exists locally
+        try:
+            pkgbuild_path = pathlib.Path(__file__).parent / "PKGBUILD"
+            if pkgbuild_path.exists():
+                with open(pkgbuild_path, 'r') as f:
+                    for line in f:
+                        if line.startswith('pkgver='):
+                            version = line.split('=')[1].strip()
+                            if version.startswith("v"):
+                                version = version[1:]
+                            return version
+        except Exception:
+            pass
+        
+        # Fallback to pacman for installed packages
         try:
             result = subprocess.run(
                 ["pacman", "-Q", REPO_NAME], capture_output=True, check=True)
