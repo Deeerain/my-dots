@@ -1,5 +1,5 @@
 pkgname=ubm-dots
-pkgver=0.0.10
+pkgver=0.0.11
 pkgrel=1
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
