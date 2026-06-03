@@ -18,7 +18,7 @@ from dataclasses import dataclass
 # Constants
 REPO_OWNER = "deeerain"
 REPO_NAME = "ubm-dots"
-VERSION = "0.0.11-2"  # Update this when releasing new versions (sync with PKGBUILD)
+VERSION = "0.1.0"  # Update this when releasing new versions (sync with PKGBUILD)
 INSTALL_FOLDER = Path("/usr/share/ubm-dots")
 DOTS_FOLDER = INSTALL_FOLDER / "dots"
 HOME_DIR = Path.home()

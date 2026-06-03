@@ -1,6 +1,6 @@
 pkgname=ubm-dots
-pkgver=0.0.11
-pkgrel=2
+pkgver=0.1.0
+pkgrel=0
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
 url="https://github.com/Deeerain/ubm-dots"
