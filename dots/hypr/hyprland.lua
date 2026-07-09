@@ -1,4 +1,3 @@
--- Подключаем ваши разделенные файлы (они должны лежать в ~/.config/hypr/hyprland/)
 require("hyprland.monitors")
 require("hyprland.autostart")
 require("hyprland.env")
