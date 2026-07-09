@@ -8,7 +8,7 @@ makedepends=('git')
 depends=(
   'fish'
   'hyprland>=0.53.0'
-  'awww-git'
+  'awww'
   'hyprlock'
   'mako'
   'btop'
