@@ -1,5 +1,5 @@
 pkgname=ubm-dots
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
@@ -21,8 +21,7 @@ depends=(
   'kitty'
   'python>=3.14'
   'python-typer>=0.21.1'
-  'ttf-jetbrains-mono-nerd'
-  'yay'
+  'ttf-nerd-fonts-symbols'
   'base-devel')
 optdepends=(
   'catppuccin-gtk-theme-frappe: Gtk theme (AUR)'
