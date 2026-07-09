@@ -10,6 +10,7 @@ depends=(
   'hyprland>=0.53.0'
   'awww'
   'hyprlock'
+  'hypridle'
   'mako'
   'btop'
   'git'
