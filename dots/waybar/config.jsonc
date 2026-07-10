@@ -6,17 +6,17 @@
   "margin-right": 5,
   "modules-left": [
     "custom/logo",
-    "hyprland/window"
+    "hyprland/window",
+    "hyprland/workspaces"
   ],
   "modules-center": [
-    "hyprland/workspaces"
+    "clock"
   ],
   "modules-right": [
     "hyprland/language",
     "network",
     "pulseaudio",
     "custom/separator",
-    "clock",
     "tray",
     "custom/powermenu"
   ],
@@ -32,26 +32,16 @@
     "sort-by-name": true,
     "on-click": "activate",
     "format": "{icon}",
+    "show-special": true,
     "format-icons": {
-      "1": "",
-      "2": "",
-      "3": "",
-      "4": "",
-      "5": "",
-      "6": "",
-      "7": "",
-      "8": "",
-      "9": "",
-      "10": "",
-      "active": "",
-      "default": ""
+      "1": "",
+      "2": "",
+      "3": "󰎄",
+      "4": "",
+      "special": ""
     },
     "persistent-workspaces": {
-      "*": [
-        1,
-        2,
-        3
-      ]
+      "*": 3
     }
   },
   "hyprland/window": {

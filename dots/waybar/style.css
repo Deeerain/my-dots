@@ -1,5 +1,4 @@
 * {
-  font-family: JetBrainsMono;
   font-size: 14px;
   margin: 0;
 }
@@ -34,3 +33,4 @@ window#waybar {
 #custom-logo {
   color: #99d1db;
 }
+

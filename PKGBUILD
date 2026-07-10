@@ -1,59 +1,49 @@
 pkgname=ubm-dots
-pkgver=0.0.4
-pkgrel=2
+pkgver=0.1.1
+pkgrel=1
 pkgdesc="Personal dotfiles for Arch + Hyprland"
 arch=('any')
 url="https://github.com/Deeerain/ubm-dots"
 makedepends=('git')
 depends=(
+  'fish'
   'hyprland>=0.53.0'
-  'hyprpaper'
+  'awww'
   'hyprlock'
+  'hypridle'
   'mako'
   'btop'
   'git'
   'grim'
   'slurp'
-  'zsh'
   'waybar'
-  'zsh-autosuggestions'
-  'zsh-syntax-highlighting'
   'exa'
   'nwg-look'
   'kitty'
   'python>=3.14'
-  'python-typer')
-optgepends=(
+  'python-typer>=0.21.1'
+  'ttf-nerd-fonts-symbols'
+  'base-devel')
+optdepends=(
   'catppuccin-gtk-theme-frappe: Gtk theme (AUR)'
   'gdm: Gnome Display Manager'
   'cassette: Yandex Music Clinet (AUR)')
 source=("git+https://github.com/deeerain/ubm-dots.git#tag=v$pkgver-$pkgrel")
-sha256sums=('SKIP')
 
 package() {
   cd "$srcdir/$pkgname"
 
-  echo "$USER"
+  local install_dir="$pkgdir/usr/share/$pkgname"
+  mkdir -p "$pkgdir/usr/bin"
 
-  local install_dir="$pkgdir/etc/skel/$REAL_USER/"
-  local install_script_dir="$pkgdir/usr/bin/"
+  for dir in ./dots/*; do
+    dots_install_dir=$install_dir/${dir#.}
+    install -dm755 "$dots_install_dir"
+    cp -r $dir/* $dots_install_dir
+  done
 
-  install -dm755 "$install_dir/.config/hypr"
-  install -dm755 "$install_dir/.config/waybar"
-  install -dm755 "$install_dir/.config/wofi"
-  install -dm755 "$install_dir/.config/mako"
-  install -dm755 "$install_dir/.config/fastfetch"
-  install -dm755 "$install_dir/.config/kitty"
-
-  install -dm755 "$install_script_dir"
-
-  cp -r dots/hypr "$install_dir/.config"
-  cp -r dots/waybar "$install_dir/.config"
-  cp -r dots/wofi "$install_dir/.config"
-  cp -r dots/mako "$install_dir/.config"
-  cp -r dots/fastfetch "$install_dir/.config"
-  cp -r dots/kitty "$install_dir/.config"
-  cp -r ubm-dots.py "$install_script_dir/ubm-dots"
-
-  install -Dm664 dots/.zshrc "$install_dir"
+  cp ubm-dots.py "$pkgdir/usr/share/$pkgname"
+  ln -sf /usr/share/ubm-dots/ubm-dots.py "$pkgdir/usr/bin/ubm-dots"
 }
+
+sha256sums=('SKIP')

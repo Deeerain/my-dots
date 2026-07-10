@@ -17,13 +17,21 @@
 
 ### AUR
 ``` bash
-https://github.com/Deeerain/my-dots.git
+git clone https://aur.archlinux.org/ubm-dots.git
 ```
 ``` bash
-cd my-dots
+cd ubm-dots
 ```
 ``` bash
 makepkg -i
+```
+``` bash
+ubm-dots install
+```
+
+### Обновление:
+``` bash
+ubm-dots update --debug
 ```
 </details>
 
@@ -52,7 +60,7 @@ makepkg -i
             <td>Скриншоты</td>
         </tr>
         <tr>
-            <td>zsh</td>
+            <td>fish</td>
             <td>Шелл</td>
         </tr>
         <tr>

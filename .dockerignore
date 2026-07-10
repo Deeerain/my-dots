@@ -1,0 +1,54 @@
+# Build artifacts
+pkg/
+src/
+*.tar.zst
+ubm-dots
+*.zst
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Documentation
+TESTING.md
+README.md
+.github/
+
+# IDE and OS
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Python cache
+*.py[cod]
+*$py.class
+*.egg-info/
+
+# Node (if any frontend tools)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.bak
+*.tmp
+.env
+.env.local
