@@ -49,8 +49,7 @@
     "separate-outputs": true,
     "format": "{initialTitle}",
     "icon": true,
-    "icon-size": 20,
-    "max-length": "25"
+    "icon-size": 20
   },
   "tray": {
     "icon-size": 14,
@@ -94,8 +93,8 @@
   },
   "hyprland/language": {
     "format": " {}",
-    "format-ru": "RU",
-    "format-en": "EN"
+    "format-ru": "ru",
+    "format-en": "en"
   },
   "custom/separator": {
     "format": "|",
