@@ -1,3 +1,5 @@
+/* GENERAL */
+
 * {
   margin: 0;
   padding: 0;
@@ -6,40 +8,87 @@
 window#waybar {
   background: transparent;
 }
-.modules-left,
-.modules-center,
-.modules-right {
+
+.modules-center > *,
+.modules-left > *,
+.modules-right > * {
   background-color: @theme_bg_color;
   border-radius: 5px;
-  padding: 5px;
 }
 
 #custom-logo,
 #custom-separator,
 #custom-powermenu,
 #window,
-#workspaces,
 #network,
 #pulseaudio,
+#language,
 #tray,
 #clock {
   padding: 0 5px;
 }
 
-#workspaces button {
-  padding: 0 .3em;
+
+/* LOGO */
+#custom-logo {
+  font-size: 14pt;
+  color: #99d1db;
 }
+
+/* WORKSPACES */
+#workspaces button {
+  padding: 0 .5em;
+}
+
 #workspaces button.active {
   background-color: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
 }
 
+/* MEDIA */
+#mpris {
+  padding: 5px;
+}
+
+#cava,
+#custom-cava,
+#custom-cavaGLSL,
+#cavaGLSL,
+#group-media {
+  background-color: #1e1e2e; /* Возвращаем стандартный фон */
+  border-radius: 15px;       /* Скругление */
+  border: 1px solid #45475a; /* Рамка */
+  margin: 4px 6px;
+  padding: 10px 25px 10px 25px;
+}
+
+/* VOLUME */
+#pulseaudio-slider {
+  border-radius: 5px;
+}
+
+#pulseaudio-slider slider {
+  min-height: 0px;
+  min-width: 0px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+}
+
+#pulseaudio-slider trough {
+  min-width: 150px;
+  border-radius: 5px;
+  min-height: 10px;
+}
+
+#pulseaudio-slider highlight {
+  min-width: 10px;
+  border-radius: 5px;
+  min-height: 10px;
+}
+
 #custom-powermenu {
-  font-size: 20px;
+  font-size: 18pt;
   color: #e78284;
 }
-
-#custom-logo {
-  color: #99d1db;
-}
-

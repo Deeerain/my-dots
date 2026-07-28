@@ -4,30 +4,69 @@
   "margin-left": 5,
   "margin-top": 5,
   "margin-right": 5,
+  "spacing": 5,
+
   "modules-left": [
     "custom/logo",
-    "hyprland/window",
-    "hyprland/workspaces"
+    "group/workspaces"
   ],
+
   "modules-center": [
-    "clock"
+    "clock",
+    "group/media"
   ],
+
   "modules-right": [
     "hyprland/language",
     "network",
-    "pulseaudio",
-    "custom/separator",
-    "tray",
-    "custom/powermenu"
+    "group/volume",
+    "group/tray"
   ],
-  "group-tray": {
+
+  "group/tray": {
     "orientation": "horizontal",
-    "modules": ["tray"],
+    "modules": [
+      "custom/powermenu",
+      "tray"
+    ],
     "drawer": {
-      "transition-duration": 500,
-      "children-class": "tray"
+      "transition-left-to-right": false,
+      "transition-duration": 500
     }
   },
+
+  "group/media": {
+    "orientation": "horizontal",
+    "modules": [
+      "cava",
+      "mpris"
+    ],
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": false
+    }
+  },
+
+  "group/volume": {
+    "orientation": "horizontal",
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider"
+    ],
+    "drawer": {
+      "transition-duration": 500,
+      "transition-left-to-right": true
+    }
+  },
+
+  "group/workspaces": {
+    "orientation": "horizontal",
+    "modules": [
+      "hyprland/window",
+      "hyprland/workspaces"
+    ]
+  },
+
   "hyprland/workspaces": {
     "sort-by-name": true,
     "on-click": "activate",
@@ -43,14 +82,35 @@
     "persistent-workspaces": {
       "*": 3
     }
-  },
+  }, 
   "hyprland/window": {
-    "max-length": 50,
+    "max-length": 25,
     "separate-outputs": true,
     "format": "{initialTitle}",
     "icon": true,
+    "expand": true,
     "icon-size": 20
   },
+  "cava": {
+    "bars": 16,
+    "mode": "pipeware",
+    "hide_on_silence": true,
+    "stereo": true,
+    "sleep_timer": 1
+  },
+  "mpris": {
+    "format": "{player_icon} {artist} - <i>{title}</i>",
+    "format-paused": "{status_icon} <i>{dynamic}</i>",
+    "player-icons": {
+      "default": "▶",
+      "mpv": "🎵"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    },
+    "ignored-players": ["firefox"]
+  },
+
   "tray": {
     "icon-size": 14,
     "spacing": 5
@@ -91,14 +151,14 @@
     },
     "on-click": "pavucontrol"
   },
+  "pulseaudio/slider": {
+    "expand": true,
+    "orientation": "horizontal"
+  },
   "hyprland/language": {
     "format": " {}",
     "format-ru": "ru",
     "format-en": "en"
-  },
-  "custom/separator": {
-    "format": "|",
-    "tooltip": false
   },
   "custom/logo": {
     "format": "󰣇",
@@ -107,7 +167,7 @@
   },
   "custom/powermenu": {
     "format": "⏻",
-    "on-click": "~/.config/wofi/powermenu/powermenu.sh",
+    "on-click": "dummy-power-menu",
     "tooltip": false
   }
 }
